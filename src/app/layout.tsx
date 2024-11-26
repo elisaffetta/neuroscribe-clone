@@ -2,12 +2,13 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Providers } from './Providers'
+import { AppProvider } from '@/context/AppContext'
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
 export const metadata: Metadata = {
   title: 'Нейроскрайб',
-  description: 'Интеллектуальная платформа для создания контента',
+  description: 'AI-powered workspace',
 }
 
 export default function RootLayout({
@@ -17,9 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html suppressHydrationWarning lang="ru">
-      <body className={`${inter.className} antialiased`}>
+      <body className={inter.className}>
         <Providers>
-          {children}
+          <AppProvider>
+            {children}
+          </AppProvider>
         </Providers>
       </body>
     </html>

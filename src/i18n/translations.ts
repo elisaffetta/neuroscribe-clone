@@ -95,6 +95,13 @@ export const translations = {
       title: 'Templates',
       description: 'Choose a template to quickly create quality content',
       useTemplate: 'Use Template',
+      categories: {
+        content: 'Content',
+        social: 'Social Media',
+        marketing: 'Marketing',
+        business: 'Business',
+        research: 'Research'
+      },
       article: {
         title: 'Write Article',
         description: 'Create a professional article considering your target audience and topic'
@@ -223,6 +230,13 @@ export const translations = {
       title: 'Шаблоны',
       description: 'Выберите шаблон для создания контента',
       useTemplate: 'Использовать шаблон',
+      categories: {
+        content: 'Контент',
+        social: 'Соцсети',
+        marketing: 'Маркетинг',
+        business: 'Бизнес',
+        research: 'Исследования'
+      },
       article: {
         title: 'Написание статьи',
         description: 'Создание профессиональной статьи с учетом вашей целевой аудитории и тематики'

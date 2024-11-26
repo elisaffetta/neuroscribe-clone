@@ -3,21 +3,25 @@ export interface Template {
   title: string;
   description: string;
   icon: string;
-  category: 'content' | 'marketing' | 'business' | 'social' | 'research';
+  category: string;
   fields: TemplateField[];
   systemPrompt: string;
+  emoji: string;
 }
 
 export interface TemplateField {
   id: string;
   label: string;
-  type: 'text' | 'textarea' | 'select' | 'number';
+  type: 'text' | 'textarea' | 'select' | 'toggle' | 'radio' | 'checkbox' | 'range' | 'number';
   placeholder?: string;
-  options?: { label: string; value: string }[];
   required?: boolean;
-  multiple?: boolean;
+  options?: { label: string; value: string }[];
+  min?: number;
+  max?: number;
+  step?: number;
+  defaultValue?: string | number | boolean | string[];
 }
 
 export interface TemplateFormData {
-  [key: string]: string | number;
+  [key: string]: string | number | boolean | string[];
 }

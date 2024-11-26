@@ -21,21 +21,17 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light')
   const [mounted, setMounted] = useState(false)
 
+  // Handle initial setup after mount
   useEffect(() => {
-    // Load saved preferences from localStorage
     const savedLanguage = localStorage.getItem('language') as Language
     const savedTheme = localStorage.getItem('theme') as Theme
     const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 
-    // Always default to Russian if no language is saved
     if (savedLanguage && ['en', 'ru'].includes(savedLanguage)) {
       setLanguage(savedLanguage)
-    } else {
-      setLanguage('ru')
-      localStorage.setItem('language', 'ru')
     }
-    
-    if (savedTheme) {
+
+    if (savedTheme && ['light', 'dark'].includes(savedTheme)) {
       setTheme(savedTheme)
     } else {
       setTheme(systemTheme)
@@ -44,37 +40,42 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setMounted(true)
   }, [])
 
+  // Save preferences to localStorage
   useEffect(() => {
     if (mounted) {
-      // Save preferences to localStorage
       localStorage.setItem('language', language)
       localStorage.setItem('theme', theme)
-
-      // Update document language
-      document.documentElement.lang = language
-
-      // Update document theme
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
     }
   }, [language, theme, mounted])
 
-  const t = (key: string) => {
+  // Apply theme to document
+  useEffect(() => {
+    if (mounted) {
+      document.documentElement.classList.toggle('dark', theme === 'dark')
+    }
+  }, [theme, mounted])
+
+  const t = (key: string): string => {
     const keys = key.split('.')
-    let value: any = translations[language]
+    let current: any = translations[language]
     
     for (const k of keys) {
-      if (value && typeof value === 'object') {
-        value = value[k]
-      } else {
+      if (current[k] === undefined) {
+        console.warn(`Translation key not found: ${key}`)
         return key
       }
+      current = current[k]
     }
     
-    return typeof value === 'string' ? value : key
+    return current
+  }
+
+  if (!mounted) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-white dark:bg-gray-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+      </div>
+    )
   }
 
   return (

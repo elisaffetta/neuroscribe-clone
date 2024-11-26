@@ -4,12 +4,7 @@ import { FC } from 'react'
 import { Bell, Moon, Sun, User, Globe } from 'lucide-react'
 import { useApp } from '@/context/AppContext'
 
-interface HeaderProps {
-  isDarkMode: boolean
-  onThemeToggle: () => void
-}
-
-const Header: FC<HeaderProps> = ({ isDarkMode, onThemeToggle }) => {
+const Header: FC = () => {
   const { theme, setTheme, language, setLanguage, t } = useApp()
 
   return (

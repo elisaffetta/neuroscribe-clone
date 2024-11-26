@@ -1,12 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import Sidebar from '@/components/layout/Sidebar'
-import Header from '@/components/layout/Header'
-import StatisticsCard from '@/components/dashboard/StatisticsCard'
+import QuickActions from '@/components/neuroscribe/QuickActions'
+import Statistics from '@/components/neuroscribe/Statistics'
+import NewsSection from '@/components/neuroscribe/NewsSection'
 import VideoTutorial from '@/components/dashboard/VideoTutorial'
-import UsageGraph from '@/components/dashboard/UsageGraph'
+import AppLayout from './AppLayout'
 
 const videoTutorials = [
   {
@@ -29,58 +28,47 @@ const videoTutorials = [
   }
 ]
 
-const weeklyData = [40, 60, 45, 75, 50, 30, 65]
-const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-
 export default function Home() {
-  const [isDarkMode, setIsDarkMode] = useState(false)
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
-
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      <Sidebar
-        collapsed={isSidebarCollapsed}
-        onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-      />
+    <AppLayout>
+      <div className="p-6 space-y-6">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+          Добро пожаловать в NeuroScribe
+        </h1>
+        
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            Быстрые действия
+          </h2>
+          <QuickActions />
+        </section>
 
-      <main className={`transition-all ${isSidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
-        <Header
-          isDarkMode={isDarkMode}
-          onThemeToggle={() => setIsDarkMode(!isDarkMode)}
-        />
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            Статистика использования
+          </h2>
+          <Statistics />
+        </section>
 
-        <div className="p-6">
-          {/* Statistics */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <StatisticsCard title="Symbols" value="193,370" color="blue-600" />
-            <StatisticsCard title="Images" value="0/5,350" color="green-600" />
-            <StatisticsCard title="Text" value="0/60" color="purple-600" />
-          </div>
-
-          {/* Video Tutorials */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Video Tutorials</h2>
-              <div className="flex space-x-2">
-                <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
-                  <ChevronLeft className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                </button>
-                <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
-                  <ChevronRight className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                </button>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <section>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Видеоинструкции
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {videoTutorials.map((tutorial) => (
+                  <VideoTutorial key={tutorial.id} {...tutorial} />
+                ))}
               </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {videoTutorials.map((video) => (
-                <VideoTutorial key={video.id} {...video} />
-              ))}
-            </div>
+            </section>
           </div>
-
-          {/* Weekly Usage Graph */}
-          <UsageGraph data={weeklyData} labels={weekDays} />
+          
+          <div>
+            <NewsSection />
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   )
 }

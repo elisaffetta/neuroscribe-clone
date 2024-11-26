@@ -4,14 +4,14 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Template } from '@/types/templates'
-import Sidebar from '@/components/layout/Sidebar'
-import { Home } from 'lucide-react'
+import { Home, ArrowRight } from 'lucide-react'
 import { useApp } from '@/context/AppContext'
+import AppLayout from '../AppLayout'
+import { templates as templateData } from '@/data/templates'
 
 export default function TemplatesPage() {
   const { t } = useApp()
   const [hoveredId, setHoveredId] = useState<string | null>(null)
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [templates, setTemplates] = useState<Template[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -19,15 +19,10 @@ export default function TemplatesPage() {
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
-        const response = await fetch('/api/templates')
-        if (!response.ok) {
-          throw new Error('Failed to fetch templates')
-        }
-        const data = await response.json()
-        setTemplates(data)
+        setTemplates(templateData)
+        setLoading(false)
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch templates')
-      } finally {
+        setError('Ошибка при загрузке шаблонов')
         setLoading(false)
       }
     }
@@ -37,88 +32,74 @@ export default function TemplatesPage() {
 
   if (loading) {
     return (
-      <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
-        <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} />
-        <main className={`flex-1 overflow-y-auto transition-all duration-300 ${sidebarCollapsed ? 'ml-20' : 'ml-64'}`}>
-          <div className="container mx-auto px-4 py-8">
-            <div className="flex justify-center items-center h-[calc(100vh-4rem)]">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-            </div>
+      <AppLayout>
+        <div className="p-6">
+          <div className="flex justify-center items-center h-[calc(100vh-4rem)]">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
           </div>
-        </main>
-      </div>
+        </div>
+      </AppLayout>
     )
   }
 
   if (error) {
     return (
-      <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
-        <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} />
-        <main className={`flex-1 overflow-y-auto transition-all duration-300 ${sidebarCollapsed ? 'ml-20' : 'ml-64'}`}>
-          <div className="container mx-auto px-4 py-8">
-            <div className="flex justify-center items-center h-[calc(100vh-4rem)]">
-              <div className="text-red-600 dark:text-red-400">{error}</div>
-            </div>
-          </div>
-        </main>
-      </div>
+      <AppLayout>
+        <div className="p-6">
+          <div className="text-red-500">{error}</div>
+        </div>
+      </AppLayout>
     )
   }
 
   return (
-    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
-      <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} />
-      <main className={`flex-1 overflow-y-auto transition-all duration-300 ${sidebarCollapsed ? 'ml-20' : 'ml-64'}`}>
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center mb-6">
-            <Link href="/" className="mr-4">
-              <button className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">
-                <Home className="w-5 h-5" />
-              </button>
-            </Link>
-            <div>
-              <h1 className="text-3xl font-bold mb-2">{t('templates.title')}</h1>
-              <p className="text-gray-600 dark:text-gray-400">
-                {t('templates.description')}
-              </p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {templates.map((template) => (
-              <motion.div
-                key={template.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.02 }}
-                onHoverStart={() => setHoveredId(template.id)}
-                onHoverEnd={() => setHoveredId(null)}
-              >
-                <Link href={`/templates/${template.id}`}>
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 h-full">
-                    <div className="p-6">
-                      <div className="text-4xl mb-4">{template.icon}</div>
-                      <h3 className="text-xl font-semibold mb-2">{t(`templates.${template.id}.title`)}</h3>
-                      <p className="text-gray-600 dark:text-gray-400">
-                        {t(`templates.${template.id}.description`)}
-                      </p>
-                    </div>
-                    <div className="px-6 py-4 bg-gray-50 dark:bg-gray-900">
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: hoveredId === template.id ? 1 : 0 }}
-                        className="text-indigo-600 dark:text-indigo-400 font-medium"
-                      >
-                        {t('templates.useTemplate')} →
-                      </motion.div>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+    <AppLayout>
+      <div className="p-6">
+        <div className="flex items-center space-x-2 mb-6">
+          <Link
+            href="/"
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+          >
+            <Home size={20} />
+          </Link>
+          <span className="text-gray-500 dark:text-gray-400">/</span>
+          <span className="text-gray-900 dark:text-white">Шаблоны</span>
         </div>
-      </main>
-    </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {templates.map((template) => (
+            <motion.div
+              key={template.id}
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-8 cursor-pointer hover:shadow-md transition-shadow relative overflow-hidden group"
+              whileHover={{ scale: 1.02 }}
+              onHoverStart={() => setHoveredId(template.id)}
+              onHoverEnd={() => setHoveredId(null)}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="text-4xl">{template.icon}</div>
+                <div className="px-3 py-1 text-sm rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300">
+                  {t(`templates.categories.${template.category}`)}
+                </div>
+              </div>
+              
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+                {template.title}
+              </h3>
+              
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">
+                {template.description}
+              </p>
+
+              <Link 
+                href={`/templates/${template.id}`}
+                className="absolute bottom-8 right-8 w-10 h-10 bg-indigo-600 dark:bg-indigo-500 rounded-full flex items-center justify-center text-white transform transition-transform group-hover:scale-110"
+              >
+                <ArrowRight size={20} />
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </AppLayout>
   )
 }
