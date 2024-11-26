@@ -1,9 +1,0 @@
-{
-  "/video-instructions/page": "app/video-instructions/page.js",
-  "/interactive-book/page": "app/interactive-book/page.js",
-  "/data-analysis/page": "app/data-analysis/page.js",
-  "/page": "app/page.js",
-  "/templates/page": "app/templates/page.js",
-  "/documents/page": "app/documents/page.js",
-  "/instructions/page": "app/instructions/page.js"
-}

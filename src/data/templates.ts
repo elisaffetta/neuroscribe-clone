@@ -6,6 +6,7 @@ export const templates: Template[] = [
     title: 'Написание статьи',
     description: 'Создание профессиональной статьи с учетом вашей целевой аудитории и тематики',
     icon: '📝',
+    category: 'content',
     fields: [
       {
         id: 'topic',
@@ -58,6 +59,7 @@ export const templates: Template[] = [
     title: 'Пост для соцсетей',
     description: 'Создание вовлекающего поста для социальных сетей',
     icon: '📱',
+    category: 'social',
     fields: [
       {
         id: 'platform',
@@ -102,6 +104,7 @@ export const templates: Template[] = [
     title: 'Email рассылка',
     description: 'Создание эффективной email кампании для вашего бизнеса',
     icon: '📧',
+    category: 'marketing',
     fields: [
       {
         id: 'campaign_type',
@@ -141,6 +144,7 @@ export const templates: Template[] = [
     title: 'Описание продукта',
     description: 'Создание продающего описания товара или услуги',
     icon: '🏷️',
+    category: 'marketing',
     fields: [
       {
         id: 'product_name',
@@ -189,6 +193,7 @@ export const templates: Template[] = [
     title: 'Маркетинговая стратегия',
     description: 'Разработка маркетинговой стратегии для бизнеса',
     icon: '📊',
+    category: 'business',
     fields: [
       {
         id: 'business_type',
@@ -242,6 +247,7 @@ export const templates: Template[] = [
     title: 'Уникальное торговое предложение',
     description: 'Создание сильного УТП для вашего продукта или услуги',
     icon: '💎',
+    category: 'marketing',
     fields: [
       {
         id: 'product_service',
@@ -285,6 +291,7 @@ export const templates: Template[] = [
     title: 'Контент-план',
     description: 'Разработка структурированного плана контента для соцсетей',
     icon: '📅',
+    category: 'content',
     fields: [
       {
         id: 'platforms',

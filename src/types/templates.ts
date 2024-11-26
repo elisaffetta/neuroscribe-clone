@@ -3,6 +3,7 @@ export interface Template {
   title: string;
   description: string;
   icon: string;
+  category: 'content' | 'marketing' | 'business' | 'social' | 'research';
   fields: TemplateField[];
   systemPrompt: string;
 }
@@ -14,6 +15,7 @@ export interface TemplateField {
   placeholder?: string;
   options?: { label: string; value: string }[];
   required?: boolean;
+  multiple?: boolean;
 }
 
 export interface TemplateFormData {
