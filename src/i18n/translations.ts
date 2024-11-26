@@ -29,12 +29,67 @@ export const translations = {
       chapters: 'Chapters',
       notes: 'Notes',
       addNotes: 'Add your notes here...',
+      description: 'Welcome to your AI-powered workspace',
+      weekDays: {
+        mon: 'Mon',
+        tue: 'Tue',
+        wed: 'Wed',
+        thu: 'Thu',
+        fri: 'Fri',
+        sat: 'Sat',
+        sun: 'Sun'
+      },
       statistics: {
         symbols: 'Symbols',
         images: 'Images',
         text: 'Text',
-        usage: 'Weekly Symbols Usage'
+        usage: 'Weekly Symbols Usage',
+        totalSymbols: 'Total Symbols',
+        totalImages: 'Total Images',
+        totalTexts: 'Total Texts',
+        weeklyStats: 'Weekly Statistics',
+        monthlyStats: 'Monthly Statistics',
+        yearlyStats: 'Yearly Statistics'
+      },
+      tutorials: {
+        gettingStarted: 'Getting Started with Analysis',
+        advanced: 'Advanced Text Processing',
+        dataVisualization: 'Data Visualization Tips',
+        basicConcepts: 'Basic Concepts',
+        intermediateTopics: 'Intermediate Topics',
+        advancedFeatures: 'Advanced Features',
+        bestPractices: 'Best Practices'
       }
+    },
+    home: {
+      description: 'Welcome to your AI-powered workspace'
+    },
+    dataAnalysis: {
+      description: 'Analyze your data with advanced AI tools'
+    },
+    documents: {
+      description: 'Manage and organize your documents'
+    },
+    instructions: {
+      description: 'Learn how to use the platform effectively',
+      title: 'Instructions',
+      searchPlaceholder: 'Search instructions...',
+      print: 'Print',
+      section: 'Section'
+    },
+    book: {
+      description: 'Interactive learning experience'
+    },
+    videoInstructions: {
+      description: 'Watch video tutorials and guides',
+      title: 'Video Instructions',
+      searchPlaceholder: 'Search tutorials...',
+      gettingStarted: 'Getting Started with Analysis',
+      advanced: 'Advanced Text Processing',
+      tips: 'Data Visualization Tips'
+    },
+    neurogate: {
+      description: 'Advanced neural network configuration'
     },
     templates: {
       title: 'Templates',
@@ -47,32 +102,22 @@ export const translations = {
       'social-media-post': {
         title: 'Social Media Post',
         description: 'Create engaging social media content optimized for your platform'
-      },
-      templates: {
-        template1: {
-          title: 'Template 1',
-          description: 'Description for template 1'
-        },
-        template2: {
-          title: 'Template 2',
-          description: 'Description for template 2'
-        }
       }
     },
-    videoTutorials: {
-      title: 'Video Tutorials',
-      searchPlaceholder: 'Search tutorials...',
-      gettingStarted: 'Getting Started with Analysis',
-      advanced: 'Advanced Text Processing',
-      tips: 'Data Visualization Tips'
-    },
-    instructions: {
-      title: 'Instructions',
-      searchPlaceholder: 'Search instructions...',
-      print: 'Print',
-      section: 'Section',
-      of: 'of',
-      welcome: 'Welcome to our comprehensive guide. This section will walk you through the basics of using our platform.'
+    chat: {
+      newChat: 'New Chat',
+      placeholder: 'Type your message here...',
+      send: 'Send',
+      recentChats: 'Recent Chats',
+      loading: 'AI is thinking...',
+      errorMessage: 'An error occurred. Please try again.',
+      welcomeMessage: 'Welcome to AI Chat! How can I help you today?',
+      deleteChat: 'Delete chat',
+      regenerateResponse: 'Regenerate response',
+      copyToClipboard: 'Copy to clipboard',
+      copySuccess: 'Copied to clipboard',
+      copyError: 'Failed to copy to clipboard',
+      emptyChats: 'No chats yet. Start a new conversation!'
     }
   },
   ru: {
@@ -105,50 +150,95 @@ export const translations = {
       chapters: 'Главы',
       notes: 'Заметки',
       addNotes: 'Добавьте ваши заметки здесь...',
+      description: 'Добро пожаловать в ваше AI-рабочее пространство',
+      weekDays: {
+        mon: 'Пн',
+        tue: 'Вт',
+        wed: 'Ср',
+        thu: 'Чт',
+        fri: 'Пт',
+        sat: 'Сб',
+        sun: 'Вс'
+      },
       statistics: {
         symbols: 'Символы',
         images: 'Изображения',
         text: 'Текст',
-        usage: 'Использование символов за неделю'
+        usage: 'Использование символов за неделю',
+        totalSymbols: 'Всего символов',
+        totalImages: 'Всего изображений',
+        totalTexts: 'Всего текстов',
+        weeklyStats: 'Статистика за неделю',
+        monthlyStats: 'Статистика за месяц',
+        yearlyStats: 'Статистика за год'
+      },
+      tutorials: {
+        gettingStarted: 'Начало работы с анализом',
+        advanced: 'Продвинутая обработка текста',
+        dataVisualization: 'Советы по визуализации данных',
+        basicConcepts: 'Основные концепции',
+        intermediateTopics: 'Темы среднего уровня',
+        advancedFeatures: 'Продвинутые функции',
+        bestPractices: 'Лучшие практики'
       }
+    },
+    home: {
+      description: 'Добро пожаловать в ваше AI-рабочее пространство'
+    },
+    dataAnalysis: {
+      description: 'Анализируйте ваши данные с помощью продвинутых AI-инструментов'
+    },
+    documents: {
+      description: 'Управляйте и организуйте ваши документы'
+    },
+    instructions: {
+      description: 'Узнайте, как эффективно использовать платформу',
+      title: 'Инструкции',
+      searchPlaceholder: 'Поиск инструкций...',
+      print: 'Печать',
+      section: 'Раздел'
+    },
+    book: {
+      description: 'Интерактивный обучающий опыт'
+    },
+    videoInstructions: {
+      description: 'Смотрите видеоуроки и руководства',
+      title: 'Видеоинструкции',
+      searchPlaceholder: 'Поиск уроков...',
+      gettingStarted: 'Начало работы с анализом',
+      advanced: 'Продвинутая обработка текста',
+      tips: 'Советы по визуализации данных'
+    },
+    neurogate: {
+      description: 'Расширенная настройка нейронной сети'
     },
     templates: {
       title: 'Шаблоны',
       description: 'Выберите шаблон для быстрого создания качественного контента',
       useTemplate: 'Использовать шаблон',
       article: {
-        title: 'Написание статьи',
-        description: 'Создание профессиональной статьи с учетом вашей целевой аудитории и тематики'
+        title: 'Написать статью',
+        description: 'Создайте профессиональную статью с учетом вашей целевой аудитории и темы'
       },
       'social-media-post': {
-        title: 'Пост в соцсети',
-        description: 'Создание привлекательного контента для социальных сетей'
-      },
-      templates: {
-        template1: {
-          title: 'Шаблон 1',
-          description: 'Описание шаблона 1'
-        },
-        template2: {
-          title: 'Шаблон 2',
-          description: 'Описание шаблона 2'
-        }
+        title: 'Пост в соцсетях',
+        description: 'Создайте привлекательный контент для социальных сетей'
       }
     },
-    videoTutorials: {
-      title: 'Видеоуроки',
-      searchPlaceholder: 'Поиск видеоуроков...',
-      gettingStarted: 'Начало работы с анализом',
-      advanced: 'Продвинутая обработка текста',
-      tips: 'Советы по визуализации данных'
-    },
-    instructions: {
-      title: 'Инструкции',
-      searchPlaceholder: 'Поиск инструкций...',
-      print: 'Печать',
-      section: 'Раздел',
-      of: 'из',
-      welcome: 'Добро пожаловать в наше подробное руководство. Этот раздел познакомит вас с основами использования нашей платформы.'
+    chat: {
+      newChat: 'Новый чат',
+      placeholder: 'Введите ваше сообщение...',
+      send: 'Отправить',
+      recentChats: 'Недавние чаты',
+      loading: 'AI думает...',
+      errorMessage: 'Произошла ошибка. Пожалуйста, попробуйте снова.',
+      welcomeMessage: 'Добро пожаловать в AI Чат! Как я могу вам помочь?',
+      deleteChat: 'Удалить чат',
+      regenerateResponse: 'Сгенерировать ответ заново',
+      copyToClipboard: 'Скопировать в буфер обмена',
+      copySuccess: 'Скопировано в буфер обмена',
+      copyError: 'Не удалось скопировать в буфер обмена',
+      emptyChats: 'Пока нет чатов. Начните новую беседу!'
     }
   }
 }
