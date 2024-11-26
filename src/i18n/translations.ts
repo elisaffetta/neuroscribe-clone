@@ -134,7 +134,7 @@ export const translations = {
       home: 'Главная',
       templates: 'Шаблоны',
       book: 'Интерактивная книга',
-      dashboard: 'Панель управления',
+      dashboard: 'Нейроскрайб',
       notifications: 'Уведомления',
       profile: 'Профиль',
       settings: 'Настройки',
