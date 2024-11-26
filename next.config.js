@@ -13,6 +13,12 @@ const nextConfig = {
         hostname: 'cdn.jsdelivr.net',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'oaidalleapiprodscus.blob.core.windows.net',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
