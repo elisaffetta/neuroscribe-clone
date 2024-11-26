@@ -11,7 +11,8 @@ import {
   LineChart,
   Menu,
   Video,
-  ChevronLeft
+  ChevronLeft,
+  MessageSquare
 } from 'lucide-react'
 
 interface SidebarProps {
@@ -20,7 +21,10 @@ interface SidebarProps {
 }
 
 const sidebarItems = [
-  { icon: HomeIcon, label: 'My Account', href: '/' },
+  { icon: HomeIcon, label: 'Главная', href: '/' },
+  { icon: FileText, label: 'Шаблоны', href: '/templates' },
+  { icon: MessageSquare, label: 'Чат с ИИ', href: '/chat' },
+  { icon: Image, label: 'Генерация изображений', href: '/image-generation' },
   { icon: LineChart, label: 'Data Analysis', href: '/data-analysis' },
   { icon: FileText, label: 'Documents', href: '/documents' },
   { icon: BookOpen, label: 'Instructions', href: '/instructions' },
