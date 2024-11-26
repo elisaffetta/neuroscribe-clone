@@ -54,7 +54,7 @@ const Sidebar: FC<SidebarProps> = ({ collapsed, onToggle }) => {
     >
       <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
         {!collapsed && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center space-x-4">
             <Image
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
               alt="Logo"
@@ -62,7 +62,7 @@ const Sidebar: FC<SidebarProps> = ({ collapsed, onToggle }) => {
               height={32}
               className="dark:invert"
             />
-            <span className="font-semibold text-gray-800 dark:text-white">{t('common.dashboard')}</span>
+            <span className="font-semibold text-gray-800 dark:text-white">{t('common.neuroscribe')}</span>
           </div>
         )}
         <button

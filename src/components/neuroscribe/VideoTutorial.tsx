@@ -1,26 +1,19 @@
 'use client'
 
 import { FC } from 'react'
-import Image from 'next/image'
+import { PlayCircle } from 'lucide-react'
 
 interface VideoTutorialProps {
   id: number
   title: string
-  thumbnail: string
   duration: string
 }
 
-const VideoTutorial: FC<VideoTutorialProps> = ({ title, thumbnail, duration }) => {
+const VideoTutorial: FC<VideoTutorialProps> = ({ title, duration }) => {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow group hover:shadow-lg transition-shadow">
-      <div className="relative">
-        <Image
-          src={thumbnail}
-          alt={title}
-          width={320}
-          height={180}
-          className="w-full h-48 object-cover transition-transform group-hover:scale-105"
-        />
+      <div className="relative bg-gray-100 dark:bg-gray-700 h-48 flex items-center justify-center">
+        <PlayCircle className="w-16 h-16 text-red-600 opacity-80 group-hover:opacity-100 transition-opacity" />
         <span className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white px-2 py-1 rounded text-sm">
           {duration}
         </span>
