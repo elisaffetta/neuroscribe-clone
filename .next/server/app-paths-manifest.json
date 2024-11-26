@@ -1,0 +1,9 @@
+{
+  "/page": "app/page.js",
+  "/data-analysis/page": "app/data-analysis/page.js",
+  "/documents/page": "app/documents/page.js",
+  "/instructions/page": "app/instructions/page.js",
+  "/neurogate/page": "app/neurogate/page.js",
+  "/interactive-book/page": "app/interactive-book/page.js",
+  "/video-instructions/page": "app/video-instructions/page.js"
+}
