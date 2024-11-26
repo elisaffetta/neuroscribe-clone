@@ -1,12 +1,12 @@
 'use client'
 
-import { FC, PropsWithChildren, useState } from 'react'
+import { FC, ReactNode, useState } from 'react'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import BackToHome from '../ui/BackToHome'
 
 interface StandardLayoutProps {
-  children: PropsWithChildren
+  children: ReactNode
 }
 
 const StandardLayout: FC<StandardLayoutProps> = ({ children }) => {

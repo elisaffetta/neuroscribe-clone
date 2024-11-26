@@ -1,12 +1,13 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Providers } from './Providers'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
 export const metadata: Metadata = {
-  title: 'AI Text Analysis Dashboard',
-  description: 'Advanced text analysis dashboard with video tutorials',
+  title: 'Нейроскрайб',
+  description: 'Интеллектуальная платформа для создания контента',
 }
 
 export default function RootLayout({
@@ -15,8 +16,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html suppressHydrationWarning lang="ru">
+      <body className={`${inter.className} antialiased`}>
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
   )
 }

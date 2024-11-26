@@ -2,17 +2,22 @@
 
 import StandardLayout from '@/components/layout/StandardLayout'
 import { Search, Upload, Grid, List } from 'lucide-react'
+import { useApp } from '@/context/AppContext'
 
 export default function Documents() {
+  const { t } = useApp()
+
   return (
     <StandardLayout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Documents</h1>
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+            {t('common.documents')}
+          </h1>
           <div className="flex space-x-4">
             <button className="flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-blue-600">
               <Upload className="w-4 h-4 mr-2" />
-              Upload
+              {t('common.upload')}
             </button>
           </div>
         </div>
@@ -22,7 +27,7 @@ export default function Documents() {
           <div className="relative flex-1 max-w-md">
             <input
               type="text"
-              placeholder="Search documents..."
+              placeholder={t('common.search') + '...'}
               className="w-full pl-10 pr-4 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-white dark:border-gray-600"
             />
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
@@ -48,8 +53,12 @@ export default function Documents() {
               <div className="aspect-w-3 aspect-h-4 bg-gray-100 dark:bg-gray-700 rounded-md mb-4">
                 {/* Document preview */}
               </div>
-              <h3 className="text-sm font-medium text-gray-900 dark:text-white">Document {item}</h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Last modified: 2 days ago</p>
+              <h3 className="text-sm font-medium text-gray-900 dark:text-white">
+                {t('common.documents')} {item}
+              </h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                {t('common.lastModified')} 2 {t('common.daysAgo')}
+              </p>
             </div>
           ))}
         </div>

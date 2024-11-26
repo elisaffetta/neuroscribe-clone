@@ -1,15 +1,16 @@
 'use client'
 
-import { FC, PropsWithChildren, useState } from 'react'
+import { FC, ReactNode, useState } from 'react'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import BackToHome from '../ui/BackToHome'
 
 interface InteractiveLayoutProps {
-  children: PropsWithChildren
+  children: ReactNode
+  floatingControls?: ReactNode
 }
 
-const InteractiveLayout: FC<InteractiveLayoutProps> = ({ children }) => {
+const InteractiveLayout: FC<InteractiveLayoutProps> = ({ children, floatingControls }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   return (

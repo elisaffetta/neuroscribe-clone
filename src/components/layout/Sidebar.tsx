@@ -12,34 +12,37 @@ import {
   Menu,
   Video,
   ChevronLeft,
-  MessageSquare
+  MessageSquare,
+  Image as ImageIcon
 } from 'lucide-react'
+import { useApp } from '@/context/AppContext'
 
 interface SidebarProps {
   collapsed: boolean
   onToggle: () => void
 }
 
-const sidebarItems = [
-  { icon: HomeIcon, label: 'Главная', href: '/' },
-  { icon: FileText, label: 'Шаблоны', href: '/templates' },
-  { icon: MessageSquare, label: 'Чат с ИИ', href: '/chat' },
-  { icon: Image, label: 'Генерация изображений', href: '/image-generation' },
-  { icon: LineChart, label: 'Data Analysis', href: '/data-analysis' },
-  { icon: FileText, label: 'Documents', href: '/documents' },
-  { icon: BookOpen, label: 'Instructions', href: '/instructions' },
-  { icon: BookOpen, label: 'Interactive Book', href: '/interactive-book' },
-  { icon: Video, label: 'Video Instructions', href: '/video-instructions' },
-  { icon: FileText, label: 'NeuroGate', href: '/neurogate' }
-]
-
 const Sidebar: FC<SidebarProps> = ({ collapsed, onToggle }) => {
   const pathname = usePathname()
   const [mounted, setMounted] = useState(false)
+  const { t } = useApp()
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  const sidebarItems = [
+    { icon: HomeIcon, label: t('common.home'), href: '/' },
+    { icon: FileText, label: t('common.templates'), href: '/templates' },
+    { icon: MessageSquare, label: t('common.chat'), href: '/chat' },
+    { icon: ImageIcon, label: t('common.imageGeneration'), href: '/image-generation' },
+    { icon: LineChart, label: t('common.dataAnalysis'), href: '/data-analysis' },
+    { icon: FileText, label: t('common.documents'), href: '/documents' },
+    { icon: BookOpen, label: t('common.instructions'), href: '/instructions' },
+    { icon: BookOpen, label: t('common.book'), href: '/interactive-book' },
+    { icon: Video, label: t('common.videoInstructions'), href: '/video-instructions' },
+    { icon: FileText, label: t('common.neurogate'), href: '/neurogate' }
+  ]
 
   if (!mounted) return null
 
@@ -59,7 +62,7 @@ const Sidebar: FC<SidebarProps> = ({ collapsed, onToggle }) => {
               height={32}
               className="dark:invert"
             />
-            <span className="font-semibold text-gray-800 dark:text-white">Dashboard</span>
+            <span className="font-semibold text-gray-800 dark:text-white">{t('common.dashboard')}</span>
           </div>
         )}
         <button
