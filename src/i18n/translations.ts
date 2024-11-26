@@ -117,7 +117,14 @@ export const translations = {
       copyToClipboard: 'Copy to clipboard',
       copySuccess: 'Copied to clipboard',
       copyError: 'Failed to copy to clipboard',
-      emptyChats: 'No chats yet. Start a new conversation!'
+      emptyChats: 'No chats yet. Start a new conversation!',
+      voiceInput: 'Voice input',
+      voiceInputStart: 'Click to start recording',
+      voiceInputStop: 'Click to stop recording',
+      voiceInputNotSupported: 'Voice input is not supported in your browser',
+      voiceInputError: 'Error accessing microphone',
+      voiceInputListening: 'Listening...',
+      voiceInputProcessing: 'Processing your voice...'
     }
   },
   ru: {
@@ -238,7 +245,15 @@ export const translations = {
       copyToClipboard: 'Скопировать в буфер обмена',
       copySuccess: 'Скопировано в буфер обмена',
       copyError: 'Не удалось скопировать в буфер обмена',
-      emptyChats: 'Пока нет чатов. Начните новую беседу!'
+      emptyChats: 'Пока нет чатов. Начните новую беседу!',
+      voiceInput: 'Голосовой ввод',
+      voiceInputStart: 'Начать запись',
+      voiceInputStop: 'Остановить запись',
+      voiceInputError: 'Ошибка при обработке голосового ввода',
+      voiceInputNotSupported: 'Голосовой ввод не поддерживается в вашем браузере',
+      voiceInputPermissionDenied: 'Доступ к микрофону запрещен. Пожалуйста, разрешите доступ в настройках браузера',
+      voiceInputListening: 'Идет запись...',
+      voiceInputProcessing: 'Обработка записи...'
     }
   }
 }
