@@ -47,66 +47,57 @@ const Sidebar: FC<SidebarProps> = ({ collapsed, onToggle }) => {
   if (!mounted) return null
 
   return (
-    <aside
+    <nav
       className={`fixed left-0 top-0 h-full bg-white dark:bg-gray-900 transition-all duration-300 ease-in-out ${
         collapsed ? 'w-20' : 'w-64'
-      } border-r border-gray-200 dark:border-gray-800 shadow-lg z-50`}
+      } z-50`}
+      role="navigation"
+      aria-label="Main navigation"
     >
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
-        {!collapsed && (
-          <div className="flex items-center space-x-4">
-            <Image
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
-              alt="Logo"
-              width={32}
-              height={32}
-              className="dark:invert"
-            />
-            <span className="font-semibold text-gray-800 dark:text-white">{t('common.neuroscribe')}</span>
-          </div>
-        )}
+      <div className="flex h-16 items-center justify-between px-4">
+        <Link href="/" className="flex items-center space-x-2" aria-label="Home">
+          <Image
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+            alt="Logo"
+            width={32}
+            height={32}
+            className="h-8 w-8 dark:invert"
+          />
+          {!collapsed && (
+            <span className="text-xl font-semibold">{t('common.neuroscribe')}</span>
+          )}
+        </Link>
         <button
           onClick={onToggle}
-          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200"
+          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          {collapsed ? (
-            <Menu className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-          ) : (
-            <ChevronLeft className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-          )}
+          {collapsed ? <Menu size={20} /> : <ChevronLeft size={20} />}
         </button>
       </div>
 
-      <nav className="mt-4 px-2">
-        {sidebarItems.map((item, index) => {
+      <div className="mt-4 px-2">
+        {sidebarItems.map((item) => {
+          const Icon = item.icon
           const isActive = pathname === item.href
           return (
             <Link
-              key={index}
+              key={item.href}
               href={item.href}
-              className={`w-full flex items-center ${
-                collapsed ? 'justify-center' : 'justify-start'
-              } p-3 my-1 rounded-lg transition-all duration-200 ${
+              className={`flex items-center space-x-2 px-4 py-3 rounded-lg transition-colors ${
                 isActive
                   ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400'
                   : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
               }`}
+              aria-current={isActive ? 'page' : undefined}
             >
-              <item.icon className={`w-5 h-5 ${
-                isActive ? 'text-indigo-600 dark:text-indigo-400' : ''
-              }`} />
-              {!collapsed && (
-                <span className={`ml-3 font-medium ${
-                  isActive ? 'text-indigo-600 dark:text-indigo-400' : ''
-                }`}>
-                  {item.label}
-                </span>
-              )}
+              <Icon size={20} aria-hidden="true" />
+              {!collapsed && <span>{item.label}</span>}
             </Link>
           )
         })}
-      </nav>
-    </aside>
+      </div>
+    </nav>
   )
 }
 

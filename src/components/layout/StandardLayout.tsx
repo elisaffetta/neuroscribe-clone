@@ -13,20 +13,20 @@ const StandardLayout: FC<StandardLayoutProps> = ({ children }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-950">
       <Sidebar
         collapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
       />
       <div
-        className={`transition-all duration-300 ${
+        className={`flex-1 transition-all duration-300 ${
           sidebarCollapsed ? 'ml-20' : 'ml-64'
         }`}
       >
         <Header />
-        <main className="p-6">
+        <div className="p-6">
           {children}
-        </main>
+        </div>
       </div>
       <BackToHome />
     </div>

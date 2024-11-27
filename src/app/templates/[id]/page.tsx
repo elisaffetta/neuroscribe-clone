@@ -58,17 +58,22 @@ export default function TemplatePage({ params }: { params: { id: string } }) {
         }),
       })
 
+      const data = await response.json()
+
       if (!response.ok) {
-        throw new Error('Failed to generate content')
+        throw new Error(data.details || data.error || 'Failed to generate content')
       }
 
-      const data = await response.json()
+      if (data.error) {
+        throw new Error(data.details || data.error)
+      }
+
       setResult(data.result)
       setShowConfetti(true)
       playSuccess()
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error)
-      setError('Не удалось сгенерировать контент. Попробуйте еще раз.')
+      setError(error.message || 'Не удалось сгенерировать контент. Попробуйте еще раз.')
     } finally {
       setIsLoading(false)
     }

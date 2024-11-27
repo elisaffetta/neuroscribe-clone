@@ -21,7 +21,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <AppProvider>
-            {children}
+            <main id="main" className="min-h-screen">
+              {children}
+            </main>
           </AppProvider>
         </Providers>
       </body>
