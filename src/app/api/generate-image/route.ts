@@ -1,16 +1,19 @@
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 
-if (!process.env.OPENAI_API_KEY) {
-  throw new Error('OPENAI_API_KEY is not set in environment variables')
-}
-
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
 export async function POST(req: Request) {
   try {
+    if (!process.env.OPENAI_API_KEY) {
+      return NextResponse.json(
+        { error: 'OpenAI API key is not configured' },
+        { status: 500 }
+      )
+    }
+
     const { prompt, n = 1, size = '512x512' } = await req.json()
 
     if (!prompt) {
@@ -49,23 +52,15 @@ export async function POST(req: Request) {
         )
       }
 
-      if (openaiError.status === 429) {
-        return NextResponse.json(
-          { error: 'Rate limit exceeded' },
-          { status: 429 }
-        )
-      }
-
-      throw openaiError
+      return NextResponse.json(
+        { error: openaiError.message || 'Failed to generate images' },
+        { status: openaiError.status || 500 }
+      )
     }
   } catch (error: any) {
-    console.error('Error generating images:', error)
-    
+    console.error('Request error:', error)
     return NextResponse.json(
-      { 
-        error: error.message || 'Failed to generate images',
-        details: process.env.NODE_ENV === 'development' ? error.toString() : undefined
-      },
+      { error: error.message || 'Internal server error' },
       { status: 500 }
     )
   }
