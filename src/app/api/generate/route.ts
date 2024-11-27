@@ -7,11 +7,6 @@ if (!process.env.OPENAI_API_KEY) {
   console.error('[GENERATE API] OPENAI_API_KEY is not set in environment variables')
 }
 
-console.log('[GENERATE API] Initializing OpenAI client')
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
-
 export async function POST(request: Request) {
   console.log('[GENERATE API] Starting request processing')
   try {
@@ -25,6 +20,10 @@ export async function POST(request: Request) {
         { status: 500 }
       )
     }
+
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    })
 
     const { template: templateId, formData } = await request.json()
     console.log('[GENERATE API] Request data:', { templateId, formData })

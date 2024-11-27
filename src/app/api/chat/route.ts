@@ -4,9 +4,6 @@ import OpenAI from 'openai'
 export async function POST(request: Request) {
   console.log('[CHAT API] Starting request processing')
   try {
-    const { messages } = await request.json()
-    console.log('[CHAT API] Received messages:', messages)
-
     if (!process.env.OPENAI_API_KEY) {
       console.log('[CHAT API] Error: OpenAI API key not configured')
       return NextResponse.json(
@@ -15,10 +12,12 @@ export async function POST(request: Request) {
       )
     }
 
-    console.log('[CHAT API] Initializing OpenAI client')
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     })
+
+    const { messages } = await request.json()
+    console.log('[CHAT API] Received messages:', messages)
 
     console.log('[CHAT API] Sending request to OpenAI')
     const response = await openai.chat.completions.create({
