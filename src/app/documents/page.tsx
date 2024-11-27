@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import StandardLayout from '@/components/layout/StandardLayout';
 import { Search, Upload, Grid, List } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
@@ -11,9 +11,14 @@ import Editor from '@/components/editor/Editor';
 import { format } from 'date-fns';
 import { formatPreviewText } from '@/lib/formatText';
 
+interface PreviewState {
+  [key: string]: string;
+}
+
 export default function Documents() {
   const { t } = useApp();
   const [selectedDoc, setSelectedDoc] = useState<typeof documents[0] | null>(null);
+  const [previews, setPreviews] = useState<PreviewState>({});
 
   const handleSave = (content: string) => {
     // В реальном приложении здесь был бы API-запрос для сохранения
@@ -21,11 +26,23 @@ export default function Documents() {
     setSelectedDoc(null);
   };
 
-  const getPreviewText = (content: string) => {
-    const formatted = formatPreviewText(content);
+  const getPreviewText = async (content: string) => {
+    const formatted = await formatPreviewText(content);
     const lines = formatted.split('\n').filter(line => line.trim());
     return lines.slice(0, 3).join('\n');
   };
+
+  useEffect(() => {
+    // Load all previews when component mounts
+    const loadPreviews = async () => {
+      const newPreviews: PreviewState = {};
+      for (const doc of documents) {
+        newPreviews[doc.id] = await getPreviewText(doc.content);
+      }
+      setPreviews(newPreviews);
+    };
+    loadPreviews();
+  }, []);
 
   return (
     <StandardLayout>
@@ -69,7 +86,7 @@ export default function Documents() {
                   </h3>
                 </div>
                 <div className="text-sm text-muted-foreground line-clamp-3">
-                  {getPreviewText(doc.content)}
+                  {previews[doc.id] || 'Loading...'}
                 </div>
                 <div className="flex items-center justify-between text-sm text-muted-foreground pt-4 border-t dark:border-gray-700">
                   <span>

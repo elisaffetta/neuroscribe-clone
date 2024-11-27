@@ -1,6 +1,6 @@
 import { marked } from 'marked';
 
-export function formatPreviewText(text: string): string {
+export async function formatPreviewText(text: string): Promise<string> {
   // Удаляем заголовки Markdown
   let formatted = text.replace(/^#+\s+/gm, '');
   
@@ -17,7 +17,7 @@ export function formatPreviewText(text: string): string {
   formatted = formatted.replace(/`[^`]*`/g, '');
   
   // Преобразуем оставшийся Markdown в HTML
-  formatted = marked(formatted);
+  formatted = await marked(formatted);
   
   // Удаляем HTML-теги, оставляя только текст
   formatted = formatted.replace(/<[^>]*>/g, '');
