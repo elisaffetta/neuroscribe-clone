@@ -7,6 +7,7 @@ import Message from '@/components/chat/Message'
 import ChatSidebar from '@/components/chat/ChatSidebar'
 import { PageTitle } from '@/components/common/PageTitle'
 import StandardLayout from '@/components/layout/StandardLayout'
+import Header from '@/components/layout/Header'
 import { useApp } from '@/context/AppContext'
 import { useVoiceInput } from '@/hooks/useVoiceInput'
 import { toast } from 'react-hot-toast'
@@ -101,25 +102,60 @@ export default function Chat() {
   }
 
   return (
-    <StandardLayout>
-      <div className="flex h-[calc(100vh-4rem)] bg-gray-50 dark:bg-gray-900">
-        <ChatSidebar
-          chats={chats}
-          currentChatId={currentChatId}
-          onNewChat={createNewChat}
-          onSelectChat={selectChat}
-          onDeleteChat={deleteChat}
-        />
+    <div className="flex flex-col h-screen">
+      <Header />
+      <div className="flex flex-1 h-[calc(100vh-4rem)] bg-gray-50 dark:bg-gray-900">
+        {/* Сайдбар с адаптивным отображением */}
+        <div className="hidden md:block">
+          <ChatSidebar
+            chats={chats}
+            currentChatId={currentChatId}
+            onNewChat={createNewChat}
+            onSelectChat={selectChat}
+            onDeleteChat={deleteChat}
+          />
+        </div>
 
-        <div className="flex-1 flex flex-col h-full">
+        <div className="flex-1 flex flex-col h-full w-full">
+          {/* Мобильный хедер с кнопкой меню */}
+          <div className="md:hidden flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-4 py-2">
+            <button
+              onClick={() => document.querySelector('.mobile-sidebar')?.classList.toggle('hidden')}
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <h1 className="text-xl font-semibold">{t('common.chat')}</h1>
+            <div className="w-10"></div> {/* Для центрирования заголовка */}
+          </div>
+
+          {/* Мобильный сайдбар */}
+          <div className="mobile-sidebar fixed inset-0 z-50 hidden md:hidden">
+            <div className="absolute inset-0 bg-black bg-opacity-50" onClick={() => document.querySelector('.mobile-sidebar')?.classList.add('hidden')}></div>
+            <div className="absolute left-0 top-0 h-full w-64 bg-white dark:bg-gray-800 shadow-lg">
+              <ChatSidebar
+                chats={chats}
+                currentChatId={currentChatId}
+                onNewChat={createNewChat}
+                onSelectChat={(chatId) => {
+                  selectChat(chatId);
+                  document.querySelector('.mobile-sidebar')?.classList.add('hidden');
+                }}
+                onDeleteChat={deleteChat}
+              />
+            </div>
+          </div>
+
           <div className="flex-1 overflow-hidden flex flex-col">
-            <div className="border-b border-gray-200 dark:border-gray-700 px-4 py-2">
+            <div className="hidden md:block border-b border-gray-200 dark:border-gray-700 px-4 py-2">
               <PageTitle title={t('common.chat')} description={t('chat.welcomeMessage')} />
             </div>
 
             <div
               ref={chatContainerRef}
-              className="flex-1 overflow-y-auto pb-4"
+              className="flex-1 overflow-y-auto pb-4 px-4 md:px-6"
             >
               {currentChat?.messages.map((message) => (
                 <Message
@@ -134,9 +170,9 @@ export default function Chat() {
               ))}
 
               {isLoading && (
-                <div className="py-8 px-4 bg-gray-50 dark:bg-gray-900">
+                <div className="py-8">
                   <div className="max-w-3xl mx-auto">
-                    <div className="flex gap-6">
+                    <div className="flex gap-4 md:gap-6">
                       <div className="w-8 h-8 rounded-full bg-green-500 dark:bg-green-600 text-white flex items-center justify-center flex-shrink-0">
                         AI
                       </div>
@@ -157,17 +193,16 @@ export default function Chat() {
             </div>
 
             <form onSubmit={handleSubmit} className="border-t border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800">
-              <div className="max-w-3xl mx-auto flex gap-4">
+              <div className="max-w-3xl mx-auto flex gap-2 md:gap-4">
                 <div className="flex-1 relative">
                   <textarea
                     ref={inputRef}
                     rows={1}
-                    className="w-full resize-none rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary dark:text-white"
+                    className="w-full resize-none rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 md:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary dark:text-white text-sm md:text-base"
                     placeholder={isListening ? t('chat.voiceInputListening') : t('chat.placeholder')}
                     onKeyDown={handleKeyDown}
                     style={{ minHeight: '42px', maxHeight: '200px' }}
                     onChange={(e) => {
-                      // Автоматически увеличиваем высоту текстового поля при необходимости
                       e.target.style.height = 'auto'
                       e.target.style.height = `${e.target.scrollHeight}px`
                     }}
@@ -199,29 +234,28 @@ export default function Chat() {
                         ? t('chat.voiceInputProcessing')
                         : t('chat.voiceInputStart')
                     }
-                    disabled={isProcessing}
                   >
                     {isListening ? (
-                      <MicOff size={20} />
+                      <MicOff className="w-5 h-5" />
                     ) : isProcessing ? (
-                      <Loader2 className="animate-spin" size={20} />
+                      <Loader2 className="w-5 h-5 animate-spin" />
                     ) : (
-                      <Mic size={20} />
+                      <Mic className="w-5 h-5" />
                     )}
                   </button>
                 )}
                 <button
                   type="submit"
-                  disabled={isLoading}
-                  className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors"
+                  title={t('chat.send')}
                 >
-                  <Send size={20} />
+                  <Send className="w-5 h-5" />
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-    </StandardLayout>
+    </div>
   )
 }
