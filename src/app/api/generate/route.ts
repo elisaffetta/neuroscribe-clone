@@ -54,7 +54,7 @@ export async function POST(request: Request) {
       model: 'gpt-4',
       messages: [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: template.userPrompt || 'Please generate the content.' }
+        { role: 'user', content: 'Please generate the content based on the provided parameters.' }
       ],
       temperature: 0.7,
       max_tokens: 2000,

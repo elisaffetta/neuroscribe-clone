@@ -6,6 +6,7 @@ export interface Template {
   category: string;
   fields: TemplateField[];
   systemPrompt: string;
+  userPrompt?: string;
   emoji: string;
 }
 

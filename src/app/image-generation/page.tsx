@@ -42,6 +42,7 @@ export default function ImageGenerationPage() {
     setError(null)
 
     try {
+      console.log('[IMAGE CLIENT] Sending request with prompt:', prompt)
       const stylePrompts = {
         natural: '',
         artistic: ', artistic style, digital art',
@@ -49,29 +50,31 @@ export default function ImageGenerationPage() {
         anime: ', anime style, manga art'
       }
 
-      const response = await fetch('/api/generate-image', {
+      const response = await fetch('/api/image', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          prompt: `${prompt}${stylePrompts[settings.style]}`,
-          n: settings.numberOfImages,
-          size: settings.size,
+          prompt: prompt + stylePrompts[settings.style],
         }),
       })
 
       if (!response.ok) {
-        throw new Error('Failed to generate images')
+        const errorData = await response.json()
+        console.error('[IMAGE CLIENT] API error:', errorData)
+        throw new Error(errorData.details || 'Failed to generate image')
       }
 
       const data = await response.json()
-      setImages(data.images)
+      console.log('[IMAGE CLIENT] Received response:', data)
+
+      setImages([data.url])
       setShowConfetti(true)
-      setTimeout(() => setShowConfetti(false), 5000) // Скрываем конфетти через 5 секунд
-    } catch (error) {
-      console.error('Error:', error)
-      setError('Не удалось сгенерировать изображения. Попробуйте еще раз.')
+      setTimeout(() => setShowConfetti(false), 5000)
+    } catch (error: any) {
+      console.error('[IMAGE CLIENT] Error:', error)
+      setError(error.message || 'Failed to generate image')
     } finally {
       setIsLoading(false)
     }
