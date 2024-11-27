@@ -73,11 +73,24 @@ export default function Chat() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!inputRef.current?.value.trim() || isLoading) return
+    if (!inputRef.current) return
 
-    const message = inputRef.current.value
-    inputRef.current.value = ''
-    await sendMessage(message)
+    const message = inputRef.current.value.trim()
+    if (!message) return
+
+    try {
+      console.log('[CHAT CLIENT] Sending message:', message)
+      await sendMessage(message)
+      console.log('[CHAT CLIENT] Message sent successfully')
+      inputRef.current.value = ''
+      inputRef.current.style.height = 'auto'
+    } catch (error: any) {
+      console.error('[CHAT CLIENT] Error sending message:', {
+        error: error.message,
+        response: error.response?.data
+      })
+      toast.error(error.message || 'Failed to send message')
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
