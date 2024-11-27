@@ -1,12 +1,6 @@
 import { useState, useCallback } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { Chat, Message, ChatState } from '@/types/chat'
-import OpenAI from 'openai'
-
-const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true
-})
 
 export function useChat() {
   const [state, setState] = useState<ChatState>({
@@ -58,7 +52,6 @@ export function useChat() {
       return {
         ...prev,
         isLoading: true,
-        error: null,
         chats: prev.chats.map(chat =>
           chat.id === prev.currentChatId ? updatedChat : chat
         ),
@@ -66,28 +59,30 @@ export function useChat() {
     })
 
     try {
-      const response = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
-        messages: [
-          { role: 'system', content: 'You are a helpful assistant.' },
-          { role: 'user', content },
-        ],
+      const messages = [...state.chats.find(chat => chat.id === state.currentChatId)?.messages || [], userMessage]
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: messages.map(({ content, role }) => ({ content, role })),
+        }),
       })
 
-      const assistantMessage: Message = {
-        id: uuidv4(),
-        role: 'assistant',
-        content: response.choices[0]?.message?.content || '',
-        timestamp: Date.now(),
+      if (!response.ok) {
+        throw new Error('Failed to get response')
       }
 
+      const assistantMessage = await response.json()
+      
       setState(prev => {
         const currentChat = prev.chats.find(chat => chat.id === prev.currentChatId)
         if (!currentChat) return prev
 
         const updatedChat = {
           ...currentChat,
-          messages: [...currentChat.messages, assistantMessage],
+          messages: [...currentChat.messages, { ...assistantMessage, id: uuidv4(), timestamp: Date.now() }],
           updatedAt: Date.now(),
         }
 
@@ -100,13 +95,14 @@ export function useChat() {
         }
       })
     } catch (error) {
+      console.error('Error sending message:', error)
       setState(prev => ({
         ...prev,
         isLoading: false,
-        error: 'Failed to get response from AI',
+        error: 'Failed to send message',
       }))
     }
-  }, [state.currentChatId])
+  }, [state.currentChatId, state.chats])
 
   const selectChat = useCallback((chatId: string) => {
     setState(prev => ({

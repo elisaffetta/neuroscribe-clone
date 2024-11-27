@@ -19,9 +19,23 @@ const nextConfig = {
         hostname: 'oaidalleapiprodscus.blob.core.windows.net',
         port: '',
         pathname: '/**',
-      }
+      },
     ],
   },
+  // Добавляем конфигурацию заголовков
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()'
+          }
+        ]
+      }
+    ]
+  }
 }
 
 module.exports = nextConfig
